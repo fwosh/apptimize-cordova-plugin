@@ -1,0 +1,1 @@
+Experimental Apptimize Cordova Plugin
