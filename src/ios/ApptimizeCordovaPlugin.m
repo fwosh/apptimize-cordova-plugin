@@ -4,22 +4,27 @@
 
 @implementation ApptimizeCordovaPlugin
 
-- (void)startApptimize:(CDVInvokedUrlCommand*)command
-{
-    NSString* callbackId = [command callbackId];
-    NSString* appKey = [[command arguments] objectAtIndex:0];
-    [Apptimize startApptimizeWithApplicationKey:appKey];
+- (void)pluginInitialize {
+    [super pluginInitialize];
     
-    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"Apptimize Started"];
-    [self.commandDelegate sendPluginResult:result callbackId:callbackId];
+    NSDictionary *settings = self.commandDelegate.settings;
+    NSString *appKey = settings[@"com.apptimize.ios.app_key"];
+    [Apptimize startApptimizeWithApplicationKey:appKey];
 }
 
+/*
+- (void)startApptimize:(CDVInvokedUrlCommand*)command
+{
+    NSString* appKey = [[command arguments] objectAtIndex:0];
+    [Apptimize startApptimizeWithApplicationKey:appKey];
+}
+*/
 
 - (void)runTest:(CDVInvokedUrlCommand*)command
 {
     NSString* callbackId = [command callbackId];
-    NSString* testName = [[command arguments] objectAtIndex:0];
-    NSArray* variationNames = [[command arguments] objectAtIndex:1];
+    NSString* testName = [command argumentAtIndex:0];
+    NSArray* variationNames = [command argumentAtIndex:1];
 
     NSMutableArray *apptimizeCodeBlocks = [NSMutableArray new];
     for ( int i = 0; i < variationNames.count; i++ ) {
@@ -35,6 +40,19 @@
         CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:0];
         [self.commandDelegate sendPluginResult:result callbackId:callbackId];
     } andApptimizeCodeBlocks:apptimizeCodeBlocks];
+}
+
+- (void)track:(CDVInvokedUrlCommand*)command
+{
+    NSString* eventName = [command argumentAtIndex:0];
+    [Apptimize track:eventName];
+}
+
+- (void)trackValue:(CDVInvokedUrlCommand*)command
+{
+    NSString* eventName = [command argumentAtIndex:0];
+    NSNumber* eventValue = [command argumentAtIndex:1];
+    [Apptimize track:eventName value:[eventValue doubleValue]];
 }
 
 @end

@@ -7,22 +7,35 @@
     <description>Apptimize A/B Testing For Cordova</description>
     <license>Apache 2.0</license>
     <keywords>ab testing, a/b testing, apptimize, feature flags</keywords>
-    
+
+
     <js-module src="www/apptimize.js" name="Apptimize">
-        <clobbers target="apptimize" />
+        <clobbers target="Apptimize" />
     </js-module>
     
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ApptimizeCordovaPlugin">
+                <param name="android-package" value="com.apptimize.cordova.ApptimizeCordovaPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/ApptimizeCordovaPlugin.java" target-dir="src/com/apptimize/cordova" />
+        <framework src="src/android/build-extras.gradle" custom="true" type="gradleReference" />
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+        </config-file>
+    </platform>
+
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="ApptimizeCordovaPlugin">
                 <param name="ios-package" value="ApptimizeCordovaPlugin" />
+                <param name="onload" value="true" />
             </feature>
         </config-file>
         <header-file src="src/ios/ApptimizeCordovaPlugin.h" />
         <source-file src="src/ios/ApptimizeCordovaPlugin.m" />
-        
-        
-        <!-- possibly set plist appkey value instead of via apptimizeStart aka setup -->
         
         <!--
          TODO: embedded binaries:

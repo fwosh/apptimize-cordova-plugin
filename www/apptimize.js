@@ -1,10 +1,16 @@
-window.apptimizeStart = function(appKey) {
+var Apptimize = function () {
+}
+
+/* Apptimize start is done automatically and the appkey is set via the config.xml preference */
+/*
+Apptimize.prototype.start = function(appKey) {
     cordova.exec(function(success){}, function(err) {}, "ApptimizeCordovaPlugin", "startApptimize", [appKey]);
 };
+*/
 
-window.runTest = function(testName, baseline, variationNames, variationBlocks) {
+Apptimize.prototype.runTest = function(testName, baseline, variationNames, variationBlocks) {
     cordova.exec(function(codeblockNumber){
-        if ( codeblockNumber === 0 ) {
+        if ( codeblockNumber === 0 || codeblockNumber > variationBlocks.length ) {
             baseline();
         }
         else {
@@ -13,23 +19,12 @@ window.runTest = function(testName, baseline, variationNames, variationBlocks) {
     }, function(err) {}, "ApptimizeCordovaPlugin", "runTest", [testName, variationNames]);
 };
 
+Apptimize.prototype.track = function(eventName) {
+    cordova.exec(function(suc){}, function(err) {}, "ApptimizeCordovaPlugin", "track", [eventName]);
+};
 
-/* Example Usage */
+Apptimize.prototype.trackValue = function(eventName, value) {
+    cordova.exec(function(suc){}, function(err) {}, "ApptimizeCordovaPlugin", "trackValue", [eventName, value]);
+};
 
-/*
-
-    window.apptimizeStart("INSERT_APP_KEY_HERE");
-
-    window.runTest("New Experiment 9",
-        function() {
-            alert("baseline");
-        },
-        ["variation1"],
-        [
-            function() {
-                alert("variation1");
-            }
-        ]
-    );
-
-*/
+module.exports = new Apptimize();
