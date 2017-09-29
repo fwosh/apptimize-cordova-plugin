@@ -4,7 +4,7 @@
 
 1. Add Experimental Plugin
 
-        cordova plugin add https://github.com/optimizely/optimizely-cordova-plugin
+        cordova plugin add https://github.com/apptimize/apptimize-cordova-plugin.git --nofetch
 
 2. Set Apptimize App Keys as preferences in plugin.xml:
 
