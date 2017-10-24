@@ -6,12 +6,10 @@
 
         cordova plugin add https://github.com/apptimize/apptimize-cordova-plugin.git --nofetch
 
-2. Set Apptimize App Keys as preferences in plugin.xml:
+2. Set Apptimize App Keys as preferences in config.xml:
 
         <preference name="com.apptimize.ios.app_key" value="APP_KEY_HERE" />
         <preference name="com.apptimize.android.app_key" value="APP_KEY_HERE" />
-
-3. For iOS: in xcode drag Apptimize.framework to the "embedded binaries" section within the target's general settings.
 
 ## Usage:
 
