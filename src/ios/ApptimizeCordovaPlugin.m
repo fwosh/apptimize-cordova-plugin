@@ -1,12 +1,13 @@
 #import "ApptimizeCordovaPlugin.h"
 #import <Cordova/CDVPlugin.h>
 #import <Apptimize/Apptimize.h>
+#import <Apptimize/Apptimize+Variables.h>
 
 @implementation ApptimizeCordovaPlugin
 
 - (void)pluginInitialize {
     [super pluginInitialize];
-    
+
     NSDictionary *settings = self.commandDelegate.settings;
     NSString *appKey = settings[@"com.apptimize.ios.app_key"];
     [Apptimize startApptimizeWithApplicationKey:appKey];
@@ -53,6 +54,34 @@
     NSString* eventName = [command argumentAtIndex:0];
     NSNumber* eventValue = [command argumentAtIndex:1];
     [Apptimize track:eventName value:[eventValue doubleValue]];
+}
+
+- (void)testInfo:(CDVInvokedUrlCommand*)command
+{
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:[Apptimize testInfo]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)isFeatureFlagOn:(CDVInvokedUrlCommand*)command
+{
+    NSString* name = [command argumentAtIndex:0];
+    CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:[Apptimize isFeatureFlagOn:name]];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+}
+
+- (void)integerWithName:(CDVInvokedUrlCommand*)command
+{
+    NSString* name = [command argumentAtIndex:0];
+    NSNumber* defaultInteger = [command argumentAtIndex:1];
+    NSInteger value = [defaultInteger longValue];
+    [ApptimizeVariable integerWithName:name andDefaultInteger:value];
+}
+
+- (void)stringWithName:(CDVInvokedUrlCommand*)command
+{
+    NSString* name = [command argumentAtIndex:0];
+    NSString* defaultString = [command argumentAtIndex:1];
+    [ApptimizeVariable stringWithName:name andDefaultString:defaultString];
 }
 
 @end

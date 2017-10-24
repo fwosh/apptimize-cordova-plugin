@@ -27,4 +27,22 @@ Apptimize.prototype.trackValue = function(eventName, value) {
     cordova.exec(function(suc){}, function(err) {}, "ApptimizeCordovaPlugin", "trackValue", [eventName, value]);
 };
 
+Apptimize.prototype.isFeatureFlagOn = function(name) {
+    cordova.exec(function(suc){
+        alert(suc);
+    }, function(err) {}, "ApptimizeCordovaPlugin", "isFeatureFlagOn", [name]);
+};
+
+Apptimize.prototype.testInfo = function() {
+    cordova.exec(function(suc){}, function(err) {}, "ApptimizeCordovaPlugin", "testInfo", []);
+};
+
+Apptimize.prototype.integerWithName = function(name, defaultInteger) {
+    cordova.exec(function(suc){}, function(err) {}, "ApptimizeCordovaPlugin", "integerWithName", [name, defaultInteger]);
+};
+
+Apptimize.prototype.stringWithName = function(name, defaultString) {
+    cordova.exec(function(suc){}, function(err) {}, "ApptimizeCordovaPlugin", "stringWithName", [name, defaultString]);
+};
+
 module.exports = new Apptimize();
