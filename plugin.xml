@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="cordova-plugin-apptimize"
     version="0.0.1">
-    
+
     <name>Apptimize Cordova Plugin</name>
     <description>Apptimize A/B Testing For Cordova</description>
     <license>Apache 2.0</license>
@@ -12,7 +12,7 @@
     <js-module src="www/apptimize.js" name="Apptimize">
         <clobbers target="Apptimize" />
     </js-module>
-    
+
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="ApptimizeCordovaPlugin">
@@ -36,13 +36,7 @@
         </config-file>
         <header-file src="src/ios/ApptimizeCordovaPlugin.h" />
         <source-file src="src/ios/ApptimizeCordovaPlugin.m" />
-        
-        <!--
-         TODO: embedded binaries:
-         http://stackoverflow.com/questions/36650522/custom-cordova-plugin-add-framework-to-embedded-binaries
-         for now just do it manually in xcode
-         -->
-        <framework src="src/ios/Apptimize.framework" custom="true" />
+        <framework src="Apptimize" type="podspec" spec="~> 2.20.2" />
     </platform>
-    
+
 </plugin>
